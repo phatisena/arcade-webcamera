@@ -29,9 +29,11 @@ document.addEventListener("DOMContentLoaded", function () {
                         .filter(device => !/^AvStream/i.test(device.label))
                         .filter(device => !/^OBS/i.test(device.label))
                         ;
-                    cameras.forEach(camera => console.log(camera.label));
-                    const camera = cameras.shift();
+                    console.log("cameras:");
+                    console.log(cameras);
+                    let camera = cameras.find(device => /^Logi Capture$/i.test(device.label)) ?? cameras[0];
                     if (camera) {
+                        console.log(`Using camera: ${camera.label}`);
                         const constraints = {
                             audio: false,
                             video: {
