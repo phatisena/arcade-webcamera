@@ -11,6 +11,11 @@ namespace webcam {
     let initialized = false;
     export let currentFrame: Image = undefined;
 
+    export function drawTransparentImage(src: Image, to: Image, x: number, y: number) {
+        if (!src || !to) { return; }
+        to.drawTransparentImage(src, x, y)
+    }
+    
     /**
      * Registers a handler when an image is onReceived
      * from the webcam
@@ -33,12 +38,19 @@ namespace webcam {
             control.raiseEvent(EVENT_ID, FRAME_EVENT)
         })
     }
+    
+    //%blockid=wcam_camimg
+    //%block="rendercamera to image"
+    export function CamRender() {
+        onFrameReceived(function() {
+            const frame = currentFrame;
+            const camimg = image.create(1,1);
+            if (frame) {
+                camimg = image.create(frame.width, frame.height)
+                drawTransparentImage(frame, camimg, 0, 0)
+            }
+        })
+        return camimg
+    }
 }
 
-// just paint background with image
-webcam.onFrameReceived(function() {
-    const frame = webcam.currentFrame;
-    if (frame) {
-        scene.setBackgroundImage(frame)
-    }
-})
