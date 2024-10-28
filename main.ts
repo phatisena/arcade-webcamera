@@ -12,11 +12,6 @@ namespace webcam {
 
     let initialized = false;
     export let currentFrame: Image = undefined;
-
-    export function drawTransparentImage(src: Image, to: Image, x: number, y: number) {
-        if (!src || !to) { return; }
-        to.drawTransparentImage(src, x, y)
-    }
     
     /**
      * Registers a handler when an image is onReceived
@@ -47,12 +42,10 @@ namespace webcam {
     //%block="rendercamera to image"
     export function CamRender() {
         const frame = currentFrame;
-        const camimg = image.create(1,1);
         if (frame) {
-            camimg = image.create(frame.width, frame.height)
-            drawTransparentImage(frame, camimg, 0, 0)
+            return frame
         }
-        return camimg
+        return null
     }
 }
 
