@@ -22,6 +22,8 @@ namespace webcam {
      * Registers a handler when an image is onReceived
      * from the webcam
     */
+    //%blockid=wcam_gotframe
+    //%block="on frame received"
     export function onFrameReceived(handler: () => void) {
         init()
         control.onEvent(EVENT_ID, FRAME_EVENT, function() {
@@ -44,14 +46,12 @@ namespace webcam {
     //%blockid=wcam_camimg
     //%block="rendercamera to image"
     export function CamRender() {
-        onFrameReceived(function() {
-            const frame = currentFrame;
-            const camimg = image.create(1,1);
-            if (frame) {
-                camimg = image.create(frame.width, frame.height)
-                drawTransparentImage(frame, camimg, 0, 0)
-            }
-        })
+        const frame = currentFrame;
+        const camimg = image.create(1,1);
+        if (frame) {
+            camimg = image.create(frame.width, frame.height)
+            drawTransparentImage(frame, camimg, 0, 0)
+        }
         return camimg
     }
 }
