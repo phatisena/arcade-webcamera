@@ -3,6 +3,8 @@
  * Please read the README.md file to setup this project with
  * your game.
  */
+
+//% color="#3876e0" icom=\uf083
 namespace webcam {
     const CHANNEL = "webcam"
     const EVENT_ID = 4567
